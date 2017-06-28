@@ -2,6 +2,7 @@ const passport = require('passport');
 
 const Authentication = require('./controllers/authentication');
 const Nivel = require('./controllers/nivel');
+const GameNivel = require('./controllers/gameNivel');
 const passportService = require('./services/passport');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -15,4 +16,6 @@ module.exports = function(app) {
     app.post('/signup', Authentication.signup);
     app.post('/nivel', Nivel.addNivelStats);
     app.get('/nivelStats', Nivel.getNivelStats);
+    app.post('/gameNivel', GameNivel.addGameNivelStats);
+    app.get('/getGameNivel', GameNivel.getGameNivelStats);
 }
