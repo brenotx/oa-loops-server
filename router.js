@@ -17,5 +17,5 @@ module.exports = function(app) {
     app.post('/nivel', Nivel.addNivelStats);
     app.get('/nivelStats', Nivel.getNivelStats);
     app.post('/gameNivel', GameNivel.addGameNivelStats);
-    app.get('/getGameNivel', GameNivel.getGameNivelStats);
+    app.get('/nivelsStats', GameNivel.getGameNivelStats);
 }
