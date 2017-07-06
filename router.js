@@ -3,6 +3,7 @@ const passport = require('passport');
 const Authentication = require('./controllers/authentication');
 const Nivel = require('./controllers/nivel');
 const GameNivel = require('./controllers/gameNivel');
+const UserNivel = require('./controllers/userNivelCtrl');
 const passportService = require('./services/passport');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
@@ -18,4 +19,5 @@ module.exports = function(app) {
     app.get('/nivelStats', Nivel.getNivelStats);
     app.post('/gameNivel', GameNivel.addGameNivelStats);
     app.get('/nivelsStats', GameNivel.getGameNivelStats);
-}
+    app.post('/setUserMaxNivel', UserNivel.setUserMaxNivel);
+};
