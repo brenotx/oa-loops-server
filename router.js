@@ -20,4 +20,5 @@ module.exports = function(app) {
     app.post('/gameNivel', GameNivel.addGameNivelStats);
     app.get('/nivelsStats', GameNivel.getGameNivelStats);
     app.post('/setUserMaxNivel', UserNivel.setUserMaxNivel);
+    app.get('/userMaxNivel/:userId', UserNivel.userMaxNivel);
 };

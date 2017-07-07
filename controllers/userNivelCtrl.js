@@ -1,3 +1,5 @@
+let ObjectId = require('mongoose').Types.ObjectId; 
+
 const UserNivel = require('../models/userNivel');
 
 exports.setUserMaxNivel = function(req, res, next) {
@@ -13,8 +15,10 @@ exports.setUserMaxNivel = function(req, res, next) {
     });
 };
 
-// exports.getUserNivelStats = function(req, res, next) {
-//     UserNivel.find({}, function (err, nivelStats) {
-//         res.send(nivelStats);
-//     });
-// }
+exports.userMaxNivel = function(req, res, next) {
+    const user_id = req.params.userId;
+
+    UserNivel.findOne({ 'user_id': new ObjectId(user_id)}, function (err, userMaxNivel) {
+        res.send(userMaxNivel);
+    });
+};
