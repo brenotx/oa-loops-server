@@ -1,6 +1,8 @@
 const jwt = require('jwt-simple');
 const User = require('../models/user');
 const config = require('../config');
+const UserNivel = require('../models/userNivel');
+
 
 function tokenForUser(user) {
     const timestamp = new Date().getTime();
@@ -39,11 +41,24 @@ exports.signup = function(req, res, next) {
             password: password
         });
 
+        const userNivel = new UserNivel({
+            user_id: user._id,
+            maxNivel: 0
+        });
+
         user.save(function(err) {
             if (err) { return next(err); }
 
+            userNivel.save(function(err) {
+                if (err) { return next(err); }
+            });
+
             // Repond to request indicating the user was created
-            res.json({ token: tokenForUser(user) });
+            // res.json({ token: tokenForUser(user) });
+            res.send({
+                token: tokenForUser(user),
+                user_id: user.id
+            });
         });
     });
 };
