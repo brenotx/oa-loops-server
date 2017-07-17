@@ -11,7 +11,7 @@ const cors = require('cors');
 const app = express();
 
 // DB Setup
-mongoose.connect('mongodb://ds161742.mlab.com:61742/heroku_w8k77swb');
+mongoose.connect('mongodb://brenotx:123456@ds161742.mlab.com:61742/heroku_w8k77swb');
 
 // App Setup
 app.use(morgan('combined'));
