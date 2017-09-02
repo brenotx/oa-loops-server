@@ -1,32 +1,44 @@
-const Nivel = require('../models/nivel');
+const Nivel = require("../models/nivel");
 
 exports.addNivelStats = function(req, res, next) {
     const nivelId = req.body.nivelId;
-    // const correctAnwsers = req.body.correctAnwsers;
-    // const wrongAnwsers = req.body.wrongAnwsers;
 
-    // const query = { 'nivelId': nivelId };
-    
-    // const nivel = new Nivel({
-    //     nivelId: nivelId,
-    //     correctAnwsers: correctAnwsers,
-    //     wrongAnwsers: wrongAnwsers
-    //     // totalInstructions: [{ numInstructions: Number, numOccurrence: Number }]
-    // });
+    Nivel.findOne({ nivelId: nivelId }, function(err, nivel) {
+        if (nivel) {
+            nivel.correctAnwsers = req.body.correctAnwsers;
+            nivel.wrongAnwsers = req.body.wrongAnwsers;
 
-    const obj = req.body;
-    // const id = obj._id;
-    delete obj._id;
+            let flag = false;
+            nivel.totalInstructions.find((item, index) => {
+                if (item.numInstructions === req.body.totalInstructions[0].numInstructions) {
+                    nivel.totalInstructions[index] = req.body.totalInstructions[0];
+                    flag = true;
+                }
+            });
+            if (!flag) {
+                nivel.totalInstructions.push(req.body.totalInstructions[0]);
+            }
+        } else {
+            const nivel = new Nivel({
+                nivelId: req.body.nivelId,
+                correctAnwsers: req.body.correctAnwsers,
+                wrongAnwsers: req.body.wrongAnwsers,
+                totalInstructions: req.body.totalInstructions
+            });
+        }
 
-    Nivel.findOneAndUpdate({ nivelId: nivelId }, req.body, { upsert: true }, function(err, result){
+        nivel.save(function(err) {
+            if (err) {
+                return next(err);
+            }
+            return res.send("succesfully saved");
+        });
         if (err) return res.send(500, { error: err });
-        
-        return res.send("succesfully saved");
     });
-}
+};
 
 exports.getNivelStats = function(req, res, next) {
-    Nivel.find({}, function (err, nivelStats) {
+    Nivel.find({}, function(err, nivelStats) {
         res.send(nivelStats);
     });
-}
+};
