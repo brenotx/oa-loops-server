@@ -1,4 +1,4 @@
-const Nivel = require("../models/nivel");
+const Nivel = require('../models/nivel');
 
 exports.addNivelStats = function(req, res, next) {
     const nivelId = req.body.nivelId;
@@ -19,7 +19,7 @@ exports.addNivelStats = function(req, res, next) {
                 nivel.totalInstructions.push(req.body.totalInstructions[0]);
             }
         } else {
-            const nivel = new Nivel({
+            nivel = new Nivel({
                 nivelId: req.body.nivelId,
                 correctAnwsers: req.body.correctAnwsers,
                 wrongAnwsers: req.body.wrongAnwsers,
@@ -31,7 +31,7 @@ exports.addNivelStats = function(req, res, next) {
             if (err) {
                 return next(err);
             }
-            return res.send("succesfully saved");
+            return res.send('succesfully saved');
         });
         if (err) return res.send(500, { error: err });
     });
